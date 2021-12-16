@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ACView">
+        <!--ac hands color declaration-->
+        <attr name="hour_hand_color" format="color" />
+        <attr name="minute_hand_color" format="color" />
+        <attr name="second_hand_color" format="color" />
+        <!--ac hands size declaration-->
+        <attr name="hour_hand_size" format="dimension" />
+        <attr name="minute_hand_size" format="dimension" />
+        <attr name="second_hand_size" format="dimension" />
+        <!--ac style-->
+        <attr name="padding" format="dimension" />
+    </declare-styleable>
+</resources>
