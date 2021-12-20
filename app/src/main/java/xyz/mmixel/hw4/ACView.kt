@@ -39,6 +39,8 @@ class ACView @JvmOverloads constructor(
     private var secondHandSize = 500F
     private var padding = 100F
     private var radius = 0F
+    private var cx: Float = 0F
+    private var cy: Float = 0F
     private var hourHandColor = Color.RED
     private var minuteHandColor = Color.LTGRAY
     private var secondHandColor = Color.GREEN
@@ -97,32 +99,32 @@ class ACView @JvmOverloads constructor(
                 val minutes = calendar[Calendar.MINUTE]
                 val seconds = calendar[Calendar.SECOND]
 
-                hourHandAngle = hourHandAngle(hours, minutes, seconds)
-                minuteHandAngle = minuteHandAngle(minutes, seconds)
-                secondHandAngle = secondHandAngle(seconds)
-                invalidate()
+                hourHandAngle = getHourHandAngle(hours, minutes, seconds)
+                minuteHandAngle = getMinuteHandAngle(minutes, seconds)
+                secondHandAngle = getSecondHandAngle(seconds)
+                postInvalidate()
                 Thread.sleep(DELAY)
             }
         }
     }
 
-    private fun hourHandAngle(h: Int, m: Int, s: Int): Float =
+    private fun getHourHandAngle(h: Int, m: Int, s: Int): Float =
         PHI + h * H_DELTA_PHI + m * (H_DELTA_PHI / H_MINUTES) + s * (H_DELTA_PHI / H_SECONDS)
 
-    private fun minuteHandAngle(m: Int, s: Int): Float =
+    private fun getMinuteHandAngle(m: Int, s: Int): Float =
         PHI + m * M_DELTA_PHI + s * (M_DELTA_PHI / M_SECONDS)
 
-    private fun secondHandAngle(s: Int): Float = PHI + s * S_DELTA_PHI
+    private fun getSecondHandAngle(s: Int): Float = PHI + s * S_DELTA_PHI
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         radius = min(height, width) / 2F - padding
+        cx = width / 2F
+        cy = height / 2F
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val cx = width / 2F
-        val cy = height / 2F
         drawDial(canvas, cx, cy, paintBorder)
         drawHands(canvas, cx, cy)
     }
